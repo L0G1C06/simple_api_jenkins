@@ -8,20 +8,30 @@ pipeline {
     }
 
     stage('Log') {
-      parallel {
-        stage('Log') {
-          steps {
-            sh 'ls -la '
-          }
-        }
+      steps {
+        sh 'ls -la '
+      }
+    }
 
-        stage('Build&Run') {
-          steps {
-            sh '''docker run -p 8000:8000 l0g1g06/simple_api_jenkins
-'''
-          }
-        }
+    stage('Build Docker Image') {
+      steps {
+        sh 'docker build -f Dockerfile . -t l0g1g06/simple_api_jenkins:latest'
+      }
+    }
 
+    stage('Docker Login') {
+      environment {
+        DOCKERHUB_USER = 'l0g1g06'
+        DOCKERHUB_PASSWORD = '@Op930001'
+      }
+      steps {
+        sh 'docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD'
+      }
+    }
+
+    stage('Docker Push') {
+      steps {
+        sh 'docker push l0g1g06/simple_api_jenkins:latest'
       }
     }
 
