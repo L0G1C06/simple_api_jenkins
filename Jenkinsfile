@@ -28,7 +28,7 @@ pipeline {
         DOCKERHUB_PASSWORD = '@Op930001'
       }
       steps {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DOCKER_CREDENTIALS', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '$DOCKER_CREDENTIALS', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
             sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
         }
       }
