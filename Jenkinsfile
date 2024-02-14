@@ -25,7 +25,9 @@ pipeline {
         DOCKERHUB_PASSWORD = '@Op930001'
       }
       steps {
-        sh 'docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD'
+        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]){
+          sh 'docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}'
+        }
       }
     }
 
