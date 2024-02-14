@@ -3,7 +3,7 @@ import uvicorn
 
 app = FastAPI() 
 
-@app.route("/")
+@app.get("/")
 async def read_root():
     return {"message": "I'm alive"}
 
