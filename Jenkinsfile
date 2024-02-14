@@ -8,16 +8,22 @@ pipeline {
     }
 
     stage('Log') {
-      steps {
-        sh 'ls -la '
+      parallel {
+        stage('Log') {
+          steps {
+            sh 'ls -la '
+          }
+        }
+
+        stage('Build&Run') {
+          steps {
+            sh '''docker run -p 8000:8000 -it l0g1g06/simple_api_jenkins
+'''
+          }
+        }
+
       }
     }
 
-    stage('Build&Run') {
-      steps {
-        sh 'python3 main.py'
-      }
-    }
-    
   }
 }
