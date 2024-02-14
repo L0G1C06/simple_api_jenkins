@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+        DOCKER_CREDENTIALS = credentials('dockerHub')
+    }
   stages {
     stage('Checkout Code') {
       steps {
@@ -25,8 +28,8 @@ pipeline {
         DOCKERHUB_PASSWORD = '@Op930001'
       }
       steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: '@Op930001', usernameVariable: 'l0g1g06')]){
-          sh 'docker login -u ${env.dockerHubUsername} -p ${env.dockerHubPassword}'
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DOCKER_CREDENTIALS', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
+            sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
         }
       }
     }
