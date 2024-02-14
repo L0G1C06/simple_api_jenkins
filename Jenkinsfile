@@ -1,7 +1,5 @@
 pipeline {
-  agent{
-    label 'python'
-  }
+  agent any
   stages {
     stage('Checkout Code') {
       steps {
@@ -20,6 +18,6 @@ pipeline {
         sh 'python3 main.py'
       }
     }
-
+    
   }
 }
