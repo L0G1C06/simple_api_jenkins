@@ -8,19 +8,8 @@ pipeline {
     }
 
     stage('Log') {
-      parallel {
-        stage('Log') {
-          steps {
-            sh 'ls -la '
-          }
-        }
-
-        stage('Run API') {
-          steps {
-            sh 'python3 main.py'
-          }
-        }
-
+      steps {
+        sh 'ls -la '
       }
     }
 
